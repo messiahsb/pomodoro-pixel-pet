@@ -19,7 +19,7 @@ body{
   color: white;
 }
 /*button layout*/
-.button-panel {
+.control-button-panel {
     background-color: #29263D;
     font-size: 30px;
     color: white;
@@ -39,7 +39,7 @@ body{
     border-radius: 25px;
     border: none;
     text-decoration: none;
-    background-color: #303B35;
+    background-color: #303b35;
     padding: 15px 32px;
     color: white;
     cursor: pointer;
@@ -47,10 +47,32 @@ body{
 }
 .control-button:hover{
  
-    background-color: #304B35;
+    background-color: #304b35;
      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
      transform: scale(1.03);
+}
+.active {
+    background-color: #425c48;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
 
+.control-button.active:hover {
+    background-color: #425C48;
+    transform: none;
+}
+.session-panel {
+    background-color: #29263D;
+    font-size: 30px;
+    color: white;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+    padding: 5px 100px;
+    border: 1px;
+    border-radius: 25px;
+    gap: 15px
 }
 /*timer layout*/
 #timer{
