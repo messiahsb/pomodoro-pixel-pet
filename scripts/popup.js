@@ -1,12 +1,31 @@
-let remainingSeconds =  25 * 60;
-let timerRunning = false;
+const FOCUS_DURATION =   25 * 60;
+const LONG_DURATION =   10 * 60;
+const SHORT_DURATION =   5 * 60;
+
+let sessionType = "focus"
+let timerState = "paused";
 let myInterval = null
+let remainingSeconds = getSessionDuration();
 
 const timer = document.getElementById("timer");
 const startButton = document.getElementById("start-button");
 const resetButton = document.getElementById("reset-button");
 console.log(timer);
 
+function getSessionDuration() {
+  if (sessionType === "focus") {
+      return FOCUS_DURATION;
+  } else if (sessionType === "long") {
+       return LONG_DURATION;
+  } else if (sessionType === "short"){
+     return SHORT_DURATION;
+  }
+  throw new Error("Invalid session type");
+}
+
+function switchSession() {
+    
+}
 function formatTime(seconds) {
     // Calculate minutes and seconds
     const curMinutes =  Math.floor(seconds/60)
@@ -19,46 +38,49 @@ function formatTime(seconds) {
 function changeTimer() {
   if(remainingSeconds > 0){
       remainingSeconds -= 1;
-      updateDisplay(remainingSeconds)
-  } else {
-      timerRunning = false;
-      clearInterval(myInterval)
-  }
-}
+      updateDisplay()
+      if (remainingSeconds <= 0) {
+        clearInterval(myInterval)
+            myInterval = null
+           startButton.textContent = "Start"
+             timerState = "completed";
+               timer.textContent = "COMPLETED"
+      } 
+  } 
+  } 
 
-function updateDisplay(seconds) {
-  timer.textContent = formatTime(seconds)
+function updateDisplay() {
+  timer.textContent = formatTime(remainingSeconds)
 }
 
 function startTimer() {
-  timerRunning = true;
+  if( timerState === "paused"){
+  timerState = "running";
   timerStart();
   startButton.textContent = "Pause"
+  }
 }
 
 function pauseTimer() {
-  timerRunning = false;
+  timerState = "paused";
   clearInterval(myInterval)
   myInterval = null
   startButton.textContent = "Start"
 }
 
 function resetTimer() {
-  timerRunning = false;
-  clearInterval(myInterval)
-  myInterval = null
-  startButton.textContent = "Start"
+  pauseTimer()
   remainingSeconds =  25 * 60;   
-  timer.textContent = formatTime(remainingSeconds)
+  updateDisplay()
 }
 
 function timerStart() {
   myInterval = setInterval(changeTimer, 1000)
 }
 startButton.addEventListener("click", () => {
-  if (timerRunning == false){
+  if (timerState === "paused"){
     startTimer()
-  } else {
+  } else if (timerState === "running") {
     pauseTimer()
   }
 });
