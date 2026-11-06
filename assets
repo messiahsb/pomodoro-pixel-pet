@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Pomodoro Pixel Pet",
+  "version": "1.0.0",
+  "description": "A Pomodoro timer with a little pixel pet.",
+  "permissions": [
+    "storage",
+    "alarms",
+    "notifications"
+  ],
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Pixel Pomodoro"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["scripts/content.js"],
+      "css": ["styles/pet.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/pet-walk.png",
+        "assets/pet-idle.png"
+      ],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}
